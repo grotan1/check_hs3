@@ -33,7 +33,18 @@ def check_arg(args=None):
 	parser.add_argument("-dt", "--devtype",
 						dest="devtype",
 						help="Device type (ex: -dt °C)",
-						default="")						
+						default="")
+	parser.add_argument("-s", "--ssl",
+						action='store_true',
+						help="Use ssl (HTTPS://)")
+	parser.add_argument("-u", "--username",
+						dest="username",
+						help="Username",
+						default="")
+	parser.add_argument("-p", "--password",
+						dest="password",
+						help="Password",
+						default="")
 						
 	results = parser.parse_args(args)
     
@@ -42,7 +53,10 @@ def check_arg(args=None):
             results.jsonstr,
 			results.warn,
 			results.crit,
-			results.devtype)
+			results.devtype,
+			results.ssl,
+			results.username,
+			results.password)
 
 
 def main():	
@@ -60,11 +74,31 @@ def main():
 	perf_data = None
 	value = ''
 	name = ''
-		
-	h,d,j,w,c,dt = check_arg(sys.argv[1:])
+	url = 'HTTP://'	
+	h,d,j,w,c,dt,ssl,u,p = check_arg(sys.argv[1:])
 	
 	try:
-		r = requests.get(h+j+d)
+		
+		
+		r = requests.get(url+h+j+d,auth=(u,p))
+		if r.status_code is not 200:
+			def userpass():
+				return "Error 401: Wrong username or password"
+			def notfound():
+				return "Error 404: Not found"
+			def forbidden():
+				return "Error 403: Forbidden"		
+			def timeout():
+				return "Error 408: Request Timeout"				
+			statuscode = {
+				401 : userpass,
+                404 : notfound,
+				403 : forbidden,
+				408 : timeout,
+			}		
+			note = statuscode.get(r.status_code, lambda : r.status_code)()
+			status = UNKNOWN
+					
 	except requests.exceptions.RequestException as e:
 		note = e
 		status = UNKNOWN
@@ -94,10 +128,10 @@ def main():
 	except ValueError:
 		warn = ""
 		
-	if value >= crit:
+	if value >= crit and value != '':
 		status = CRITICAL
 	
-	elif value >= warn:
+	elif value >= warn and value != '':
 		status = WARNING	
 	
 	if status is None:
