@@ -32,7 +32,7 @@ def check_arg(args=None):
 						default="")
 	parser.add_argument("-dt", "--devtype",
 						dest="devtype",
-						help="Device type. (ex: -dt °C)",
+						help="Device type (ex: -dt °C)",
 						default="")						
 						
 	results = parser.parse_args(args)
@@ -113,9 +113,6 @@ def main():
 		print '%s %s' % (short_status[status], note)
 	sys.exit(status)	
 	
-#	print value
-
-
 if __name__ == '__main__':
 	main()
 
