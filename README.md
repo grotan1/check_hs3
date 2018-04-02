@@ -5,7 +5,7 @@ Arguments:
 ```
   -h, --help            	show this help message and exit
   -H HOST, --host 	  	HS3 host
-  -d DEVREF, --devref 		DEVREF HS3 comma-separated device ref (ex: -d 70,181)
+  -d DEVREF, --devref 		HS3 comma-separated device ref (ex: -d 70,181)
   -j JSONSTR, --jsonstr 	HS3 JSON string (ex: -j /JSON?request=getstatus&ref=)
   -w WARN, --warn 	  	Warning value
   -c CRIT, --crit 	  	Critical value
