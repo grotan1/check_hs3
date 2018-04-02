@@ -1,2 +1,2 @@
 # check_hs3
-Icinga check plugin for HS3
+Icinga / Nagios check plugin for HS3
