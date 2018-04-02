@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 # encoding=utf8
+############################## check_hs3 ########################
+# Date: Apr 02 2018
+# Author: Geir Rune Grøtan
+# Help: https://github.com/grotan1/check_hs3
+# Licence: MIT License - https://tldrlegal.com/license/mit-license
+#################################################################
+#
+# Help : ./check_hs3.py -h
+#
 
 import json
 import requests
@@ -12,7 +21,7 @@ def check_arg(args=None):
 	parser.add_argument("-H", "--host",
 						 action='store',
 						 dest="host",
-						 help="HS3 host (ex: -H http://10.0.0.40)",
+						 help="HS3 host",
 						 required='True')
 	parser.add_argument("-d", "--devref",
 						dest="devref",
@@ -142,16 +151,16 @@ def main():
 				status = OK
 		
 			if status != UNKNOWN:
-				note += '%s: %s %s' % (name, value, dt)
+				note += '%s: %s%s ' % (name, value, dt)
 				if perf_data is None:
 					perf_data = '%s=%s;%s;%s' % (name, value, w, c)
 				elif perf_data is not None:
 					perf_data += ' %s=%s;%s;%s' % (name, value, w, c)
 	
 	if status != UNKNOWN and perf_data:
-		print '%s %s | %s' % (short_status[status], note, perf_data)
+		print 'HS3 %s %s | %s' % (short_status[status], note, perf_data)
 	else:
-		print '%s %s' % (short_status[status], note)
+		print 'HS3 %s %s' % (short_status[status], note)
 	sys.exit(status)	
 	
 if __name__ == '__main__':
