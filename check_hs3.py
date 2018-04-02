@@ -16,7 +16,7 @@ def check_arg(args=None):
 						 required='True')
 	parser.add_argument("-d", "--devref",
 						dest="devref",
-						help="HS3 device ref (ex: -d 70)",
+						help="HS3 comma-separated device ref (ex: -d 70,181)",
 						required='True')
 	parser.add_argument("-j", "--jsonstr",
 						dest="jsonstr", 
@@ -77,9 +77,10 @@ def main():
 	url = 'HTTP://'	
 	h,d,j,w,c,dt,ssl,u,p = check_arg(sys.argv[1:])
 	
+	if ssl is True:
+		url = "HTTPS://"
+	
 	try:
-		
-		
 		r = requests.get(url+h+j+d,auth=(u,p))
 		if r.status_code is not 200:
 			def userpass():
@@ -92,7 +93,7 @@ def main():
 				return "Error 408: Request Timeout"				
 			statuscode = {
 				401 : userpass,
-                404 : notfound,
+				404 : notfound,
 				403 : forbidden,
 				408 : timeout,
 			}		
@@ -110,36 +111,43 @@ def main():
 			note = 'Decoding JSON has failed'
 			status = UNKNOWN
 	
+	devlist = d.split(",")
 	if status is None:
-		try:
-			value = float(j["Devices"][0]["value"])
-			name = j["Devices"][0]["name"].encode('utf-8')
-		except IndexError:
-			note = "Reference ID",d,"not found"
-			status = UNKNOWN
-	
-	try: 
-		crit = float(c)
-	except ValueError:
-		crit = ""
+		for x in range(0,len(devlist)):
 		
-	try: 
-		warn = float(w)
-	except ValueError:
-		warn = ""
-		
-	if value >= crit and value != '':
-		status = CRITICAL
+			try:
+				value = float(j["Devices"][x]["value"])
+				name = j["Devices"][x]["name"].encode('utf-8')
+			except IndexError:
+				note = "Reference ID",devlist[x],"not found"
+				status = UNKNOWN
+				break
 	
-	elif value >= warn and value != '':
-		status = WARNING	
-	
-	if status is None:
-		status = OK
+			try: 
+				crit = float(c)
+			except ValueError:
+				crit = ""
 		
-	if status != UNKNOWN:
-		note = '%s: %s %s' % (name, value, dt)
-		perf_data = '%s=%s;%s;%s' % (name, value, w, c)
+			try: 
+				warn = float(w)
+			except ValueError:
+				warn = ""
+		
+			if value >= crit and value != '':
+				status = CRITICAL
+	
+			elif value >= warn and value != '':
+				status = WARNING	
+	
+			if status is None:
+				status = OK
+		
+			if status != UNKNOWN:
+				note += '%s: %s %s' % (name, value, dt)
+				if perf_data is None:
+					perf_data = '%s=%s;%s;%s' % (name, value, w, c)
+				elif perf_data is not None:
+					perf_data += ' %s=%s;%s;%s' % (name, value, w, c)
 	
 	if status != UNKNOWN and perf_data:
 		print '%s %s | %s' % (short_status[status], note, perf_data)
