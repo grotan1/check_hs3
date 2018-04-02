@@ -25,11 +25,11 @@ def check_arg(args=None):
 						 required='True')
 	parser.add_argument("-d", "--devref",
 						dest="devref",
-						help="HS3 comma-separated device ref (ex: -d 70,181)",
-						required='True')
+						help="Comma-separated device ref (i.e: -d 70,181)",
+						required='True',)
 	parser.add_argument("-j", "--jsonstr",
 						dest="jsonstr", 
-						help="HS3 JSON string (ex: -j /JSON?request=getstatus&ref=)",
+						help="HS3 JSON string (i.e: -j /JSON?request=getstatus&ref=)",
 						default="/JSON?request=getstatus&ref=")
 	parser.add_argument("-w", "--warn",
 						dest="warn",
@@ -41,11 +41,11 @@ def check_arg(args=None):
 						default="")
 	parser.add_argument("-dt", "--devtype",
 						dest="devtype",
-						help="Device type (ex: -dt °C)",
+						help="Device type (i.e: -dt °C)",
 						default="")
 	parser.add_argument("-s", "--ssl",
 						action='store_true',
-						help="Use ssl (HTTPS://)")
+						help="Use ssl")
 	parser.add_argument("-u", "--username",
 						dest="username",
 						help="Username",
