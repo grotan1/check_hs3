@@ -113,8 +113,7 @@ def main():
 	
 	devlist = d.split(",")
 	if status is None:
-		for x in range(0,len(devlist)):
-		
+		for x in range(0,len(devlist)):		
 			try:
 				value = float(j["Devices"][x]["value"])
 				name = j["Devices"][x]["name"].encode('utf-8')
