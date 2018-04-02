@@ -2,7 +2,7 @@
 Icinga / Nagios check plugin for HS3
 
 Icinga command:
-
+```
 object CheckCommand "hs3" {
 	command = [ PluginContribDir + "/check_hs3.py" ]
 
@@ -45,9 +45,10 @@ object CheckCommand "hs3" {
 		}				
 	}
 }
+```
 
 Service example:
-
+```
 apply Service "temperature_outdoor" {
   import "generic-service"
   check_command = "hs3"
@@ -57,3 +58,4 @@ apply Service "temperature_outdoor" {
   vars.hs3_devicetype = "°C"  
   assign where host.name == "hs3.example.com"
 }
+```
