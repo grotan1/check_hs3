@@ -13,7 +13,7 @@ object CheckCommand "hs3" {
 		}
 		"-d" = {
 			value = "$hs3_devref$"
-			description = "Commaseparated list of devices."
+			description = "Comma-separated list of devices."
 		}
 		"-j" = {
 			value = "$hs3_djsonstr$"
