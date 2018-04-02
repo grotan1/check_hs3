@@ -5,12 +5,12 @@ Arguments:
 ```
   -h, --help            	show this help message and exit
   -H HOST, --host 	  	HS3 host
-  -d DEVREF, --devref 		HS3 comma-separated device ref (ex: -d 70,181)
-  -j JSONSTR, --jsonstr 	HS3 JSON string (ex: -j /JSON?request=getstatus&ref=)
+  -d DEVREF, --devref 		Comma-separated device ref (i.e: -d 70,181)
+  -j JSONSTR, --jsonstr 	HS3 JSON string (i.e: -j /JSON?request=getstatus&ref=)
   -w WARN, --warn 	  	Warning value
   -c CRIT, --crit 	  	Critical value
-  -dt DEVTYPE, --devtype	Device type (ex: -dt °C)
-  -s, --ssl             	Use ssl (HTTPS://)
+  -dt DEVTYPE, --devtype	Device type (i.e: -dt °C)
+  -s, --ssl             	Use ssl
   -u USERNAME, --username 	Username
   -p PASSWORD, --password	Password
 ```
