@@ -1,6 +1,19 @@
 # check_hs3
 Icinga / Nagios check plugin for HS3
 
+Arguments:
+```
+  -h, --help            	show this help message and exit
+  -H HOST, --host 	  	HS3 host
+  -d DEVREF, --devref 		DEVREF HS3 comma-separated device ref (ex: -d 70,181)
+  -j JSONSTR, --jsonstr 	HS3 JSON string (ex: -j /JSON?request=getstatus&ref=)
+  -w WARN, --warn 	  	Warning value
+  -c CRIT, --crit 	  	Critical value
+  -dt DEVTYPE, --devtype	Device type (ex: -dt °C)
+  -s, --ssl             	Use ssl (HTTPS://)
+  -u USERNAME, --username 	Username
+  -p PASSWORD, --password	Password
+```
 Icinga command:
 ```
 object CheckCommand "hs3" {
