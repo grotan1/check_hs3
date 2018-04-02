@@ -66,6 +66,7 @@ apply Service "temperature_outdoor" {
   import "generic-service"
   check_command = "hs3"
   
+  check_interval = 5m
   vars.hs3_address = host.address
   vars.hs3_devref = "36,70"
   vars.hs3_devicetype = "°C"  
