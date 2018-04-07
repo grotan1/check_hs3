@@ -33,11 +33,11 @@ def check_arg(args=None):
 						default="/JSON?request=getstatus&ref=")
 	parser.add_argument("-w", "--warn",
 						dest="warn",
-						help="Warning value",
+						help="Comma-separated Warning value (i.e: -w 22,23)",
 						default="")	
 	parser.add_argument("-c", "--crit",
 						dest="crit",
-						help="Critical value",
+						help="Comma-separated Critical value (i.e: -c 25,26)",
 						default="")
 	parser.add_argument("-dt", "--devtype",
 						dest="devtype",
