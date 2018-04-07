@@ -121,6 +121,9 @@ def main():
 			status = UNKNOWN
 	
 	devlist = d.split(",")
+	warnlist = w.split(",")
+	critlist = c.split(",")
+	
 	if status is None:
 		for x in range(0,len(devlist)):		
 			try:
@@ -132,13 +135,13 @@ def main():
 				break
 	
 			try: 
-				crit = float(c)
-			except ValueError:
+				crit = float(critlist[x])
+			except:
 				crit = ""
-		
+			
 			try: 
-				warn = float(w)
-			except ValueError:
+				warn = float(warnlist[x])
+			except:
 				warn = ""
 		
 			if value >= crit and value != '':
@@ -153,9 +156,9 @@ def main():
 			if status != UNKNOWN:
 				note += '%s: %s%s ' % (name, value, dt)
 				if perf_data is None:
-					perf_data = '%s=%s;%s;%s' % (name, value, w, c)
+					perf_data = '%s=%s;%s;%s' % (name, value, warn, crit)
 				elif perf_data is not None:
-					perf_data += ' %s=%s;%s;%s' % (name, value, w, c)
+					perf_data += ' %s=%s;%s;%s' % (name, value, warn, crit)
 	
 	if status != UNKNOWN and perf_data:
 		print 'HS3 %s %s | %s' % (short_status[status], note, perf_data)
