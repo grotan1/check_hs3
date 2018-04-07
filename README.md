@@ -6,7 +6,7 @@ Arguments:
   -h, --help            	show this help message and exit
   -H HOST, --host 	  	HS3 host
   -d DEVREF, --devref 		Comma-separated device ref (i.e: -d 70,181)
-  -j JSONSTR, --jsonstr 	HS3 JSON string (i.e: -j /JSON?request=getstatus&ref=)
+  -j JSONSTR, --jsonstr 	HS3 JSON string (default: -j /JSON?request=getstatus&ref=)
   -w WARN, --warn 	  	Comma-separated Warning value (i.e: -w 22,23)
   -c CRIT, --crit 	  	Comma-separated Critical value (i.e: -c 25,26)
   -dt DEVTYPE, --devtype	Device type (i.e: -dt °C)
@@ -30,7 +30,7 @@ object CheckCommand "hs3" {
 		}
 		"-j" = {
 			value = "$hs3_djsonstr$"
-			description = "HS3 JSON string (ex: /JSON?request=getstatus&ref=)"	
+			description = "HS3 JSON string (default: /JSON?request=getstatus&ref=)"	
 		}
 		"-w" = {
 			value = "$hs3_warn$"
@@ -69,6 +69,8 @@ apply Service "temperature_outdoor" {
   check_interval = 1m
   vars.hs3_address = host.address
   vars.hs3_devref = "36,70"
+  vars.hs3_warn = "20,21"
+  vars.hs3_crit = "25,26"
   vars.hs3_devicetype = "°C"  
   assign where host.name == "hs3.example.com"
 }
