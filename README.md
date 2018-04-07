@@ -1,6 +1,12 @@
 # check_hs3
 Icinga / Nagios check plugin for HS3
 
+Copy plugin to your PluginDir. 
+```
+/usr/lib64/nagios/plugins (Default PluginDir on Centos)
+/usr/lib/nagios/plugins (Default PluginDir on Debian/Ubuntu)
+```
+
 Arguments:
 ```
   -h, --help            	show this help message and exit
@@ -14,6 +20,7 @@ Arguments:
   -u USERNAME, --username 	Username
   -p PASSWORD, --password	Password
 ```
+
 Icinga command:
 ```
 object CheckCommand "hs3" {
