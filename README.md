@@ -7,8 +7,8 @@ Arguments:
   -H HOST, --host 	  	HS3 host
   -d DEVREF, --devref 		Comma-separated device ref (i.e: -d 70,181)
   -j JSONSTR, --jsonstr 	HS3 JSON string (i.e: -j /JSON?request=getstatus&ref=)
-  -w WARN, --warn 	  	Warning value
-  -c CRIT, --crit 	  	Critical value
+  -w WARN, --warn 	  	Comma-separated Warning value (i.e: -w 22,23)
+  -c CRIT, --crit 	  	Comma-separated Critical value (i.e: -c 25,26)
   -dt DEVTYPE, --devtype	Device type (i.e: -dt °C)
   -s, --ssl             	Use ssl
   -u USERNAME, --username 	Username
