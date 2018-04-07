@@ -29,7 +29,7 @@ def check_arg(args=None):
 						required='True',)
 	parser.add_argument("-j", "--jsonstr",
 						dest="jsonstr", 
-						help="HS3 JSON string (i.e: -j /JSON?request=getstatus&ref=)",
+						help="HS3 JSON string (default: -j /JSON?request=getstatus&ref=)",
 						default="/JSON?request=getstatus&ref=")
 	parser.add_argument("-w", "--warn",
 						dest="warn",
