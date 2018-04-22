@@ -39,10 +39,18 @@ def check_arg(args=None):
 						dest="crit",
 						help="Comma-separated Critical value (i.e: -c 25,26)",
 						default="")
-	parser.add_argument("-dt", "--devtype",
-						dest="devtype",
-						help="Device type (i.e: -dt °C)",
+	parser.add_argument("-mx", "--max",
+						dest="max",
+						help="Comma-separated Max value (i.e: -mx 40,45)",
 						default="")
+	parser.add_argument("-mn", "--min",
+						dest="min",
+						help="Comma-separated Minimum value (i.e: -c 25,26)",
+						default="")												
+	parser.add_argument("-sym", "--symbol",
+						dest="symbol",
+						help="Device type (i.e: -sym ºC)",
+						default="")						
 	parser.add_argument("-s", "--ssl",
 						action='store_true',
 						help="Use ssl")
@@ -62,7 +70,9 @@ def check_arg(args=None):
             results.jsonstr,
 			results.warn,
 			results.crit,
-			results.devtype,
+			results.max,
+			results.min,
+			results.symbol,
 			results.ssl,
 			results.username,
 			results.password)
@@ -83,8 +93,12 @@ def main():
 	perf_data = None
 	value = ''
 	name = ''
+	graphitepath = ''
 	url = 'HTTP://'	
-	h,d,j,w,c,dt,ssl,u,p = check_arg(sys.argv[1:])
+	h,d,j,w,c,mx,mn,sym,ssl,u,p = check_arg(sys.argv[1:])
+	
+
+	
 	
 	if ssl is True:
 		url = "HTTPS://"
@@ -123,6 +137,8 @@ def main():
 	devlist = d.split(",")
 	warnlist = w.split(",")
 	critlist = c.split(",")
+	maxlist = mx.split(",")
+	minlist = mn.split(",")
 	
 	if status is None:
 		for x in range(0,len(devlist)):		
@@ -143,22 +159,31 @@ def main():
 				warn = float(warnlist[x])
 			except:
 				warn = ""
-		
+
+			try: 
+				max = float(maxlist[x])
+			except:
+				max = ""		
+			try: 
+				min = float(minlist[x])
+			except:
+				min = ""		
+	
 			if value >= crit and value != '':
 				status = CRITICAL
 	
 			elif value >= warn and value != '':
 				status = WARNING	
-	
+				
 			if status is None:
 				status = OK
 		
 			if status != UNKNOWN:
-				note += '%s: %s%s ' % (name, value, dt)
+				note += '%s: %s%s ' % (name, value, sym)
 				if perf_data is None:
-					perf_data = '%s=%s;%s;%s' % (name, value, warn, crit)
+					perf_data = '%s=%s;%s;%s;%s;%s' % (graphitepath+name, value, warn, crit,min,max)
 				elif perf_data is not None:
-					perf_data += ' %s=%s;%s;%s' % (name, value, warn, crit)
+					perf_data += ' %s=%s;%s;%s;%s;%s' % (graphitepath+name, value, warn, crit,min,max)
 	
 	if status != UNKNOWN and perf_data:
 		print 'HS3 %s %s | %s' % (short_status[status], note, perf_data)
