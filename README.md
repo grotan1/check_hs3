@@ -17,7 +17,7 @@ Arguments:
   -c CRIT, --crit 	  	Comma-separated Critical value (i.e: -c 25,26)
   -mx MAX, --max		Comma-separated Max value (i.e: -mx 40,45)
   -mn MIN, --min		Comma-separated Minimum value (i.e: -c 25,26)
-  -sym DEVTYPE, --symbos	Device symbol (i.e: -dt °C)
+  -sym SYMBOL, --symbos	Device symbol (i.e: -dt °C)
   -s, --ssl             	Use ssl
   -u USERNAME, --username 	Username
   -p PASSWORD, --password	Password
