@@ -7,6 +7,10 @@ Copy plugin to your PluginDir.
 /usr/lib/nagios/plugins (Default PluginDir on Debian/Ubuntu)
 ```
 
+```
+Dependencies: pip install requests
+```
+
 Arguments:
 ```
   -h, --help            	show this help message and exit
