@@ -6,8 +6,10 @@ Copy plugin to your PluginDir.
 /usr/lib64/nagios/plugins (Default PluginDir on Centos)
 /usr/lib/nagios/plugins (Default PluginDir on Debian/Ubuntu)
 ```
-Dependencies: pip install requests
 
+```
+Dependencies: pip install requests
+```
 
 Arguments:
 ```
