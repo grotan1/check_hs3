@@ -7,7 +7,7 @@
 # Licence: MIT License - https://tldrlegal.com/license/mit-license
 #################################################################
 #
-# Help : ./check_hs3.py -h
+# Help : ./check_hs3_python3x.py -h
 #
 # Dependencies: pip install requests
 
