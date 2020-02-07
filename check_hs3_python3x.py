@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding=utf8
 ############################## check_hs3 ########################
-# Date: Apr 02 2018
+# Date: Feb 02 2020
 # Author: Geir Rune Grøtan
 # Help: https://github.com/grotan1/check_hs3
 # Licence: MIT License - https://tldrlegal.com/license/mit-license
@@ -9,6 +9,7 @@
 #
 # Help : ./check_hs3.py -h
 #
+# Dependencies: pip install requests
 
 import json
 import requests
