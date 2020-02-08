@@ -7,7 +7,7 @@
 # Licence: MIT License - https://tldrlegal.com/license/mit-license
 #################################################################
 #
-# Help : ./check_hs3.py -h
+# Help : ./check_hs3_python3x.py -h
 #
 # Dependencies: pip install requests
 
@@ -174,10 +174,13 @@ def main():
 			if value != "" and crit != "":
 				if value >= crit:
 					status = CRITICAL
+				elif value != "" and warn != "":
+					if value >= warn:
+						status = WARNING
 
-			if value != "" and warn != "":
+			elif value != "" and warn != "":
 				if value >= warn:
-					status = WARNING
+         				status = WARNING
 
 			if status is None:
 				status = OK
