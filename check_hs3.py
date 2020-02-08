@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding=utf8
 ############################## check_hs3 ########################
-# Date: Apr 02 2018
+# Date: Feb 02 2020
 # Author: Geir Rune Grøtan
 # Help: https://github.com/grotan1/check_hs3
 # Licence: MIT License - https://tldrlegal.com/license/mit-license
@@ -68,8 +68,8 @@ def check_arg(args=None):
 	results = parser.parse_args(args)
 
 	return (results.host,
-            results.devref,
-            results.jsonstr,
+			results.devref,
+			results.jsonstr,
 			results.warn,
 			results.crit,
 			results.max,
@@ -93,7 +93,7 @@ def main():
 	status = None
 	note = ''
 	perf_data = None
-	value = ''
+	value = 0.0
 	name = ''
 	graphitepath = ''
 	url = 'HTTP://'
@@ -107,7 +107,7 @@ def main():
 
 	try:
 		r = requests.get(url+h+j+d,auth=(u,p))
-		if r.status_code is not 200:
+		if r.status_code != 200:
 			def userpass():
 				return "Error 401: Wrong username or password"
 			def notfound():
@@ -146,7 +146,7 @@ def main():
 		for x in range(0,len(devlist)):
 			try:
 				value = float(j["Devices"][x]["value"])
-				name = j["Devices"][x]["name"].encode('utf-8')
+				name = str(j["Devices"][x]["name"].encode('utf-8'))
 			except IndexError:
 				note = "Reference ID",devlist[x],"not found"
 				status = UNKNOWN
@@ -171,11 +171,13 @@ def main():
 			except:
 				min = ""
 
-			if value >= crit and value != '':
-				status = CRITICAL
+			if value != "" and crit != "":
+				if value >= crit:
+					status = CRITICAL
 
-			elif value >= warn and value != '':
-				status = WARNING
+			if value != "" and warn != "":
+				if value >= warn:
+					status = WARNING
 
 			if status is None:
 				status = OK
@@ -183,14 +185,14 @@ def main():
 			if status != UNKNOWN:
 				note += '%s: %s%s ' % (name, value, sym)
 				if perf_data is None:
-					perf_data = '%s=%s;%s;%s;%s;%s' % (graphitepath+name, value, warn, crit,min,max)
+					perf_data = "%s=%s;%s;%s;%s;%s" % (graphitepath+name, value, warn, crit,min,max)
 				elif perf_data is not None:
-					perf_data += ' %s=%s;%s;%s;%s;%s' % (graphitepath+name, value, warn, crit,min,max)
+					perf_data += (' %s=%s;%s;%s;%s;%s' % (graphitepath+name, value, warn, crit,min,max))
 
 	if status != UNKNOWN and perf_data:
-		print 'HS3 %s %s | %s' % (short_status[status], note, perf_data)
+		print ('HS3 %s %s | %s' % (short_status[status], note, perf_data))
 	else:
-		print 'HS3 %s %s' % (short_status[status], note)
+		print ('HS3 %s %s' % (short_status[status], note))
 	sys.exit(status)
 
 if __name__ == '__main__':
