@@ -1,5 +1,5 @@
 # check_hs3
-Icinga / Nagios check plugin for HS3
+Icinga / Nagios check plugin for HS3 and HS4
 
 Copy plugin to your PluginDir. 
 ```
